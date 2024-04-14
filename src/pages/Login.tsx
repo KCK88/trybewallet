@@ -1,41 +1,65 @@
-import Button from '../components/Button';
-import Input from '../components/Input';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { emailFormSubmit } from '../redux/actions';
+import { useDispatch } from 'react-redux';
 
 function Login() {
-  const handleChange = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+  });
 
+  const handleChange = (
+    { target }: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const { name: targetName, value } = target;
+    setForm({ ...form, [targetName]: value });
   };
-  const email = '';
-  const password = '';
+
+  const { email, password } = form;
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   return (
     <div>
       <form
         onSubmit={ ((event) => {
           event.preventDefault();
+          dispatch(emailFormSubmit(form));
+          navigate('/carteira');
         }) }
       >
-        <Input
-          label="Email: "
+        <label htmlFor="email">Email: </label>
+        <input
           type="email"
           onChange={ handleChange }
           value={ email }
           name="email"
+          data-testid="email-input"
           required
         />
-        <Input
-          label="Senha: "
+        <label htmlFor="password">Senha: </label>
+        <input
           type="password"
           onChange={ handleChange }
           value={ password }
-          name="name"
+          name="password"
+          data-testid="password-input"
+          minLength={ 6 }
           required
         />
-        <Button
+        <button
           type="submit"
-          label="Entrar"
-          moreClasses="is-fullwidth is-info"
-        />
+          disabled={ password.length < 6 || !validateEmail(email) }
+        >
+          Entrar
+        </button>
+
       </form>
     </div>
   );
