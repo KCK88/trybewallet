@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { emailFormSubmit } from '../redux/actions';
 import { useDispatch } from 'react-redux';
+import { emailFormSubmit } from '../redux/actions';
 
 function Login() {
   const dispatch = useDispatch();
@@ -20,9 +20,9 @@ function Login() {
 
   const { email, password } = form;
 
-  const validateEmail = (email: string) => {
+  const validateEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+    return emailRegex;
   };
 
   return (
@@ -55,7 +55,7 @@ function Login() {
         />
         <button
           type="submit"
-          disabled={ password.length < 6 || !validateEmail(email) }
+          disabled={ password.length < 6 || !validateEmail() }
         >
           Entrar
         </button>
