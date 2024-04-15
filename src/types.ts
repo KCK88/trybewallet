@@ -3,5 +3,5 @@ export type UserData = {
 };
 
 export type GlobalState = {
-  userData: UserData,
+  user: UserData,
 };

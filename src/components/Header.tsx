@@ -3,8 +3,9 @@ import { GlobalState } from '../types';
 
 function Header() {
   const state = useSelector((globalState: GlobalState) => (
-    { ...globalState.userData }
+    { ...globalState.user }
   ));
+  console.log(state.email);
   return (
     <>
       <div>
