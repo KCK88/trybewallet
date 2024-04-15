@@ -11,7 +11,7 @@ const user = (state = USER_STATE, action: AnyAction) => {
     case EMAIL_FORM_SUBMIT:
       return {
         ...state,
-        ...action.payload,
+        email: action.payload,
       };
     default:
       return state;
