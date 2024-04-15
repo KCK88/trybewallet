@@ -20,10 +20,11 @@ function Login() {
 
   const { email, password } = form;
 
-  const validateEmail = () => {
+  const validateEmail = (mail: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex;
+    return emailRegex.test(mail);
   };
+  console.log(validateEmail(email));
 
   return (
     <div>
@@ -55,7 +56,7 @@ function Login() {
         />
         <button
           type="submit"
-          disabled={ password.length < 6 || !validateEmail() }
+          disabled={ password.length < 6 || !validateEmail(email) }
         >
           Entrar
         </button>

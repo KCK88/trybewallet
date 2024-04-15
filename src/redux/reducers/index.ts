@@ -5,8 +5,8 @@ import wallet from './wallet';
 // Configure os seus reducers.
 // ATENÇÃO: você obrigatoriamente tem que utilizar as chaves "user" e "wallet" no seu estado global
 const rootReducers = combineReducers({
-  user, // cuidado com shorthand
-  wallet, // cuidado com o shorthand
+  userData: user, // cuidado com shorthand
+  walletData: wallet, // cuidado com o shorthand
 });
 
 export default rootReducers;
