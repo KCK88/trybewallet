@@ -17,7 +17,7 @@ export const expensesFormSubmit = (expenses: Expense) => ({
   payload: expenses,
 });
 
-const requestStarted = () => {
+export const requestStarted = () => {
   return { type: REQUEST_STARTED };
 };
 
@@ -28,7 +28,7 @@ const requestSuccessful = (currencies: WalletData) => {
   };
 };
 
-const requestFailed = (error: string) => {
+export const requestFailed = (error: string) => {
   return {
     type: REQUEST_FAILED,
     payload: error,
