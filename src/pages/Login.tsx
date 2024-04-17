@@ -24,7 +24,6 @@ function Login() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(mail);
   };
-  console.log(validateEmail(email));
 
   return (
     <div>

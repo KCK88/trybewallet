@@ -1,29 +1,111 @@
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch, GlobalState } from '../types';
+import { expensesFormSubmit, fetchCurrency } from '../redux/actions';
+
 function WalletForm() {
+  const dispatch: Dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCurrency());
+  }, []);
+
+  const { currencies } = useSelector((globalState: GlobalState) => (
+    globalState.wallet
+  ));
+
+  const [form, setForm] = useState({
+    value: '',
+    description: '',
+    method: 'Dinheiro',
+    tag: 'Alimentação',
+    currency: 'USD',
+  });
+
+  const handleChange = (
+    { target }: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const { name: targetName, value } = target;
+    setForm({ ...form, [targetName]: value });
+  };
+
+  const handleSubmit = (async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const fetchAsks = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const asksData = await fetchAsks.json();
+    const expense = { ...form, exchangeRates: asksData };
+    setForm({
+      value: '',
+      description: '',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      currency: 'USD',
+    });
+    dispatch(expensesFormSubmit(expense));
+  });
+
+  const { value, description, method, tag, currency } = form;
+
   return (
     <div>
       <form
-        onSubmit={ ((event) => {
-          event.preventDefault();
-        }) }
+        onSubmit={ handleSubmit }
       >
-        <label htmlFor="number" data-testid="value-input">Valor</label>
-        <input type="number" name="value" />
+        <label htmlFor="number">Valor</label>
+        <input
+          value={ value }
+          name="value"
+          onChange={ handleChange }
+          data-testid="value-input"
+          required
+        />
 
-        <label htmlFor="text" data-testid="description-input">Descrição</label>
-        <input type="text" name="text" />
+        <label htmlFor="text">Descrição</label>
+        <input
+          value={ description }
+          type="text"
+          name="description"
+          onChange={ handleChange }
+          data-testid="description-input"
+          required
+        />
 
-        <select name="select" data-testid="method-input">
-          <option value="cash">Dinheiro</option>
-          <option value="credit-card">Cartão de crédito</option>
-          <option value="debit-card">Cartão de débito</option>
+        <select
+          value={ currency }
+          name="currency"
+          data-testid="currency-input"
+          onChange={ handleChange }
+          required
+        >
+          {currencies.map((coin) => (
+            <option key={ coin }>{coin}</option>
+          ))}
         </select>
 
-        <select name="select" data-testid="tag-input">
-          <option value="tag-food">Alimentação</option>
-          <option value="tag-leisure">Lazer</option>
-          <option value="tag-work">Trabalho</option>
-          <option value="tag-mobility">Transporte</option>
-          <option value="tag-health">Saúde</option>
+        <select
+          value={ method }
+          name="method"
+          data-testid="method-input"
+          onChange={ handleChange }
+          required
+        >
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão de crédito">Cartão de crédito</option>
+          <option value="Cartão de débito">Cartão de débito</option>
+        </select>
+
+        <select
+          value={ tag }
+          name="tag"
+          data-testid="tag-input"
+          onChange={ handleChange }
+          required
+        >
+          <option value="Alimentação">Alimentação</option>
+          <option value="Lazer">Lazer</option>
+          <option value="Trabalho">Trabalho</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Saúde">Saúde</option>
         </select>
 
         <button type="submit">Adicionar despesa</button>
