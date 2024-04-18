@@ -23,30 +23,40 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {expenses.map(({
-          id,
+        {expenses.map(({ id,
           value,
           description,
           tag,
           currency,
           method,
-          exchangeRates,
-        }) => (
-          <tr key={ id }>
-            <td>{description}</td>
-            <td>{tag}</td>
-            <td>{method}</td>
-            <td>{Number(value).toFixed(2)}</td>
-            <td>{currency}</td>
-            <td>{exchangeRates[currency].name}</td>
-            <td>{(Number(value) * exchangeRates[currency].ask).toFixed(2)}</td>
-            <td>Real</td>
-            <td>
-              <button type="button" data-testid="delete-btn">
-                Excluir
-              </button>
-            </td>
-          </tr>
+          exchangeRates }) => (
+            <tr key={ id }>
+              <td>{description}</td>
+              <td>{tag}</td>
+              <td>{method}</td>
+              <td>{parseFloat(value).toFixed(2)}</td>
+              <td>{currency}</td>
+              <td>{parseFloat(exchangeRates[currency].ask).toFixed(2)}</td>
+              <td>
+                {(parseFloat(exchangeRates[currency].ask)
+              * parseFloat(value)).toFixed(2)}
+              </td>
+              <td>{exchangeRates[currency].name}</td>
+              <td>
+                <button
+                  type="button"
+                >
+                  Editar
+                </button>
+              </td>
+              <td>
+                <button
+                  type="button"
+                >
+                  Excluir
+                </button>
+              </td>
+            </tr>
         ))}
       </tbody>
     </table>
