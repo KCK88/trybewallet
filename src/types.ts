@@ -7,9 +7,10 @@ export type UserData = {
 
 export type WalletData = {
   currencies: [],
-  expenses: Expense[],
+  expenses: (Expense & { id: number })[],
   editor: boolean,
   idToEdit: number,
+
 };
 
 export type Expense = {
