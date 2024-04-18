@@ -4,11 +4,13 @@ import {
   REQUEST_STARTED,
   REQUEST_SUCCESSFUL,
   REQUEST_FAILED,
-  EXPENSES_FORM_SUBIMIT } from '../actions';
+  EXPENSES_FORM_SUBIMIT,
+  EXCLUDE_EXPENSE } from '../actions';
+import { Expenses } from '../../types';
 
 const WALLET_STATE = {
   currencies: [],
-  expenses: [],
+  expenses: [] as Expenses[],
   editor: false,
   idToEdit: 0,
   isFetching: false,
@@ -40,6 +42,12 @@ const wallet = (state = WALLET_STATE, action: AnyAction) => {
         isFetching: false,
         currencies: Object.keys(action.payload),
         errorMessage: '',
+      };
+
+    case EXCLUDE_EXPENSE:
+      return {
+        ...state,
+        expenses: state.expenses.filter((expense) => expense.id !== action.payload),
       };
 
     case REQUEST_FAILED:

@@ -6,6 +6,7 @@ export const EXPENSES_FORM_SUBIMIT = 'EXPENSES_FORM_SUBIMIT';
 export const REQUEST_STARTED = 'REQUEST_STARTED';
 export const REQUEST_SUCCESSFUL = 'REQUEST_SUCCESSFUL';
 export const REQUEST_FAILED = 'REQUEST_FAILED';
+export const EXCLUDE_EXPENSE = 'EXCLUDE_EXPENSE';
 
 export const emailFormSubmit = (email: UserData) => ({
   type: EMAIL_FORM_SUBMIT,
@@ -34,6 +35,11 @@ export const requestFailed = (error: string) => {
     payload: error,
   };
 };
+
+export const excludeExpense = (expenseId: number) => ({
+  type: EXCLUDE_EXPENSE,
+  payload: expenseId,
+});
 
 export const fetchCurrency = () => {
   return async (dispatch: Dispatch) => {

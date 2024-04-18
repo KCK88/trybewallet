@@ -27,4 +27,14 @@ export type GlobalState = {
   wallet: WalletData
 };
 
+export type Expenses = {
+  value: string,
+  description: string,
+  method: string,
+  tag: string,
+  currency: string,
+  exchangeRates: any,
+  id: number
+};
+
 export type Dispatch = ThunkDispatch<GlobalState, null, AnyAction>;

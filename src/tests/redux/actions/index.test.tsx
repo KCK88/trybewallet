@@ -1,8 +1,8 @@
 import { EMAIL_FORM_SUBMIT, REQUEST_FAILED, REQUEST_STARTED, emailFormSubmit, requestFailed, requestStarted } from '../../../redux/actions';
 import { UserData } from '../../../types';
 
-describe('User_data', () => {
-  test('Should return right User_data action with email', () => {
+describe('Verifica a action emailFormSubmit', () => {
+  test('Verifica se retornar a ação User_data correta com email', () => {
     const userData: UserData = { email: 'jose@gmail.com' };
     const expectedType = EMAIL_FORM_SUBMIT;
 
@@ -13,8 +13,8 @@ describe('User_data', () => {
   });
 });
 
-describe('Request_data', () => {
-  test('Should return right Request_data action with email', () => {
+describe('Verifica a action requestStarted', () => {
+  test('Verifica se a Action tem o retorno correto', () => {
     const expectedType = REQUEST_STARTED;
 
     const result = requestStarted();
@@ -23,8 +23,8 @@ describe('Request_data', () => {
   });
 });
 
-describe('RequestFailed_data', () => {
-  test('Should return right RequestFailed_data action with email', () => {
+describe('Verifica se a action retorna erro de requisição', () => {
+  test('Verifica se a Action retorno mensagem de erro', () => {
     const expectedType = REQUEST_FAILED;
     const error = 'error';
 

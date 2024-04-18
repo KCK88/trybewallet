@@ -1,11 +1,16 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { GlobalState } from '../types';
+import { excludeExpense } from '../redux/actions';
 
 function Table() {
-  const
-    { expenses } = useSelector((globalState: GlobalState) => (
-      globalState.wallet
-    ));
+  const { expenses } = useSelector((globalState: GlobalState) => (
+    globalState.wallet
+  ));
+  const dispatch = useDispatch();
+
+  const handleClick = (id: number) => {
+    dispatch(excludeExpense(id));
+  };
 
   return (
     <table>
@@ -34,12 +39,12 @@ function Table() {
               <td>{description}</td>
               <td>{tag}</td>
               <td>{method}</td>
-              <td>{parseFloat(value).toFixed(2)}</td>
+              <td>{Number(value).toFixed(2)}</td>
               <td>{currency}</td>
-              <td>{parseFloat(exchangeRates[currency].ask).toFixed(2)}</td>
+              <td>{Number(exchangeRates[currency].ask).toFixed(2)}</td>
               <td>
-                {(parseFloat(exchangeRates[currency].ask)
-              * parseFloat(value)).toFixed(2)}
+                {(Number(exchangeRates[currency].ask)
+              * Number(value)).toFixed(2)}
               </td>
               <td>{exchangeRates[currency].name}</td>
               <td>
@@ -48,10 +53,10 @@ function Table() {
                 >
                   Editar
                 </button>
-              </td>
-              <td>
                 <button
                   type="button"
+                  data-testid="delete-btn"
+                  onClick={ () => handleClick((id)) }
                 >
                   Excluir
                 </button>
